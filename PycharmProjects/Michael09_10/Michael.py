@@ -2,6 +2,7 @@ from urllib.error import URLError, HTTPError
 
 import bs4,os
 import re,urllib.request
+import shutil
 
 url = 'http://www.math.pku.edu.cn/teachers/qiuzy/ds_python/courseware/index.htm'
 pattern = re.compile(r'(.pdf)$')
@@ -52,7 +53,7 @@ if __name__=='__main__':
 
     isexist = os.path.exists(download_folder)
     if isexist:
-        remove_old = os.removedirs(download_folder)
+        remove_old = shutil.rmtree(download_folder)
     newfolder = os.makedirs(download_folder)
 
     download_pdf(all_pdf_link)

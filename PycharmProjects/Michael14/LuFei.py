@@ -1,4 +1,4 @@
-import os, re
+import os, re, shutil
 import urllib.request
 from urllib.error import URLError, HTTPError
 
@@ -19,7 +19,9 @@ def get_url_link():
     else:
         print('Good!')
         content = str(res.read(), 'utf-8')
-        print(content)
+        with open(os.path.join(Downfolder,'HtmlContent.txt'), 'w') as f :
+            f.write(content)
+        # print(content)
     return content
 
 
@@ -41,7 +43,7 @@ def down_Pic(list, Downfolder):
     JPGnbr = 0
     for child in list:
         loc = os.path.join(Downfolder, str(JPGnbr)+'.jpg')
-        with open(loc, 'wb') as f:
+        with open(loc, 'w') as f:
             Piclink = urllib.request.urlopen(child).read()
             f.write(Piclink)
         JPGnbr += 1
@@ -51,8 +53,8 @@ def down_Pic(list, Downfolder):
 if __name__=='__main__':
     if os.path.exists(Downfolder):
         print("目录已经存在了！")
-        os.rmdir(Downfolder)
-    Newfolder = os.makedirs(Downfolder)
+        shutil.rmtree(Downfolder)
+    os.makedirs(Downfolder)
 
     url_content = get_url_link()
     list = get_pic_link(url_content)
